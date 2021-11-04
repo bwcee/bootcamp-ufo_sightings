@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../template/head'); %>
+</head>
+
+<body class="container">
+  <header>
+    <%- include('../template/nav'); %>
+  </header>
+
+  <main>
+    <div class="jumbotron">
+      <h1>Welcome to Sightings R'Us</h1>
+      <p class="lead">If it ain't here, it ain't exist</p>
+    </div>
+
+    <div id="center-content">
+
+      <form id="sort-section">
+
+        <select name="sighting" id="sort-options">
+          <option value="shape">
+            shape
+          </option>
+          <option value="city">
+            city
+          </option>
+          <option value="state">
+            state
+          </option>
+          <option value="date_time">
+            Date/ Time
+          </option>
+        </select>
+        <button class="btn btn-outline-secondary btn-sm" input type="submit" id="sort-button">Sort</button>
+      </form>
+
+    </div>
+
+
+    </div>
+    <div class="container-fluid" id="sighting-content">
+
+      <h4>Sightings Seen</h4>
+
+      <div class="table-responsive">
+        <table class="table">
+
+          <tr>
+            <th>Date/ Time</th>
+            <th class="d-none d-sm-table-cell">Shape</th>
+            <th class="d-none d-sm-table-cell">City</th>
+            <th>State</th>
+            <th id="delete-heading">Delete</th>
+          </tr>
+          <% sightingsArr.forEach((el, index)=> { %>
+            <tr>
+              <td>
+                <a href="/sighting/<%= index %>"><%= el.date_time %></a>
+              </td>
+              <td>
+                <%= el.shape %>
+              </td>
+              <td>
+                <%= el.city %>
+              </td>
+              <td>
+                <%= el.state %>
+              </td>
+              <td>delete</td>
+            </tr>
+            <% }) %>
+        </table>
+      </div>
+  </main>
+
+
+  <footer>
+    <%- include('../template/footer'); %>
+  </footer>
+</body>
+
+</html>
