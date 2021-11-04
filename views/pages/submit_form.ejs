@@ -1,21 +1,70 @@
-<html>
-  <body>
-    <form action="/sightings" method="POST">
-      <label for="city">City:</label>
-      <input type="text" id="city" name="city" />
-      <label for="state">State:</label>
-      <input type="text" id="state" name="state" /><br />
+<!-- "city" "state" "text" "date_time" "shape" "duration" "summary" -->
 
-      <label for="shape">Shape:</label>
-      <input type="text" id="shape" name="shape" />
-      <label for="duration">Duration:</label>
-      <input type="text" id="duration" name="duration" />
-      <label for="date_time">Date/Time:</label>
-      <input type="datetime-local" id="date_time" name="date_time" /><br />
 
-      <input type="submit" value="Submit" />
-    </form>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../template/head'); %>
+</head>
+
+<body class="container">
+  <header>
+    <%- include('../template/nav'); %>
+  </header>
+
+  <main>
+
+    <div class="container-fluid" id="sighting-content">
+
+      <div class="table-responsive">
+        <form action="/sighting" method="POST">
+          <table class="table">
+            <tr>
+              <th>Date/ Time</th>
+              <th class="d-none d-sm-table-cell">Shape</th>
+              <th class="d-none d-sm-table-cell">City</th>
+              <th>State</th>
+              <th>Duration</th>
+            </tr>
+            <tr>
+              <td>
+                <input class="form-control" type="datetime-local" id="date_time" name="date_time" />
+              </td>
+              <td>
+                <input class="form-control" type="text" id="shape" name="shape" />
+              </td>
+              <td>
+                <input class="form-control" type="text" id="city" name="city" />
+              </td>
+              <td>
+                <input class="form-control" type="text" id="state" name="state" />
+              </td>
+              <td><input class="form-control" type="text" id="duration" name="duration" /></td>
+            </tr>
+            <tr>
+              <td colspan="5"><strong>Summary</strong></td>
+            </tr>
+            <tr>
+              <td colspan="5"><input class="form-control col-lg-4" type="text" id="summary" name="summary" /></td>
+            </tr>
+            <tr>
+              <td colspan="5"><strong>Full Text</strong></td>
+            </tr>
+            <tr>
+              <td colspan="5"><textarea class="form-control col-lg-4" id="text" name="text"></textarea>
+              </td>
+            </tr>
+          </table>
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
+  </main>
+
+
+  <footer>
+    <%- include('../template/footer'); %>
+  </footer>
+</body>
+
 </html>
-
-"city" "state" "text" "date_time" "shape" "duration" "summary"
