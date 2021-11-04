@@ -102,12 +102,7 @@ function remove(filename, key, index, callPrintFunc) {
 }
 
 function editOneElement(filename, key, index, payload, callPrintFunc) {
-  if (process.argv.length < 6) {
-    console.log(
-      'Please input command as: "node index.js editOne <list: either items or done> <number of the item to edit> <contents to change item to>"'
-    );
-  } else {
-    edit(
+     edit(
       filename,
       (err, jsonContentObj) => {
         if (err) {
@@ -124,7 +119,6 @@ function editOneElement(filename, key, index, payload, callPrintFunc) {
       },
       callPrintFunc
     );
-  }
-}
+ }
 
 export { write, read, add, edit, remove, editOneElement };

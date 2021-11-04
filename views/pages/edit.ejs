@@ -15,7 +15,7 @@
     <div class="container-fluid" id="sighting-content">
 
       <div class="table-responsive">
-        <form action="/sighting" method="POST">
+        <form action="/sighting/edit/<%= thisSighting.index %>?_method=PUT" method="POST">
           <table class="table">
             <tr>
               <th>Date/ Time</th>
@@ -26,30 +26,30 @@
             </tr>
             <tr>
               <td>
-                <input class="form-control" type="datetime-local" id="date_time" name="date_time" />
+                <input class="form-control" type="datetime-local" id="date_time" name="date_time" value="<%= thisSighting.date_time %>" />
               </td>
               <td>
-                <input class="form-control" type="text" id="shape" name="shape" />
+                <input class="form-control" type="text" id="shape" name="shape" value="<%= thisSighting.shape %>"/>
               </td>
               <td>
-                <input class="form-control" type="text" id="city" name="city" />
+                <input class="form-control" type="text" id="city" name="city" value="<%= thisSighting.city %>"/>
               </td>
               <td>
-                <input class="form-control" type="text" id="state" name="state" />
+                <input class="form-control" type="text" id="state" name="state" value="<%= thisSighting.state %>"/>
               </td>
-              <td><input class="form-control" type="text" id="duration" name="duration" /></td>
+              <td><input class="form-control" type="text" id="duration" name="duration" value="<%= thisSighting.duration %>"/></td>
             </tr>
             <tr>
               <td colspan="5"><strong>Summary</strong></td>
             </tr>
             <tr>
-              <td colspan="5"><input class="form-control col-lg-4" type="text" id="summary" name="summary" /></td>
+              <td colspan="5"><input class="form-control col-lg-4" type="text" id="summary" name="summary" value="<%= thisSighting.summary %>"/></td>
             </tr>
             <tr>
               <td colspan="5"><strong>Full Text</strong></td>
             </tr>
             <tr>
-              <td colspan="5"><textarea class="form-control col-lg-4" id="text" name="text"></textarea>
+              <td colspan="5"><textarea class="form-control col-lg-4" id="text" name="text" ><%= thisSighting.text %></textarea>
               </td>
             </tr>
           </table>
