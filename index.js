@@ -1,13 +1,16 @@
-import express, { request, response } from "express";
+import express from "express";
 import { read, add, edit, remove, editOneElement } from "./json_arw.js";
 import methodOverride from "method-override";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 app.set("view engine", "ejs");
-app.use(express.static("public"));
+// app.use(express.static("/public"));
+app.use(express.static(join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
-
 
 // Render Home page
 const goHome = (request, response) => {
@@ -22,9 +25,10 @@ const goHome = (request, response) => {
 
 // Render a single sighting
 const showFullSighting = (request, response) => {
-  const { indexToShow } = request.params;
+  const indexToShow = request.params.indexToShow;
   read("data.json", (err, data) => {
-    const thisSighting = data.sightings[indexToShow];
+    let thisSighting = data.sightings[indexToShow];
+    thisSighting.index = indexToShow;
     if (err) {
       response.status(404).send("Git outta here, there's no such page!");
     }
@@ -42,22 +46,17 @@ const doSubmitSighting = (request, response) => {
   add("data.json", "sightings", newSighting, (err) => {
     if (err) {
       response.status(500).send("DB write error.");
-      return;
     }
     response.redirect(301, "/");
   });
-}
+};
 
 // Edit sighting
 const editSighting = (request, response) => {
   const { indexToEdit } = request.params;
-  console.log('This is indexToEdit', indexToEdit)
   read("data.json", (err, data) => {
-    console.log('This is data.sightings', data.sightings)
     const thisSighting = data.sightings[indexToEdit];
-    console.log('thisSighting before adding index', thisSighting)
-    thisSighting.index = indexToEdit 
-    console.log('thisSighting after adding index', thisSighting)
+    thisSighting.index = indexToEdit;
     if (err) {
       response.status(404).send("Git outta here, there's no such page!");
     }
@@ -76,7 +75,6 @@ const doEditSighting = (request, response) => {
     (err) => {
       if (err) {
         response.status(500).send("DB write error.");
-        return;
       }
       response.redirect(301, "/");
     }
@@ -90,7 +88,6 @@ const deleteSighting = (request, response) => {
   remove("data.json", "sightings", indexToDelete, (err) => {
     if (err) {
       response.send("Not able to delete!");
-      return;
     }
     response.redirect(303, "/");
   });
@@ -101,7 +98,7 @@ app.get("/sighting/:indexToShow", showFullSighting);
 app.get("/sighting", submitSighting);
 app.post("/sighting", doSubmitSighting);
 app.get("/sighting/edit/:indexToEdit", editSighting);
-app.put("/sighting/edit/:indexToEdit", doEditSighting) 
-app.delete("/sighting/delete/:indexToDelete", deleteSighting)
+app.put("/sighting/edit/:indexToEdit", doEditSighting);
+app.delete("/sighting/delete/:indexToDelete", deleteSighting);
 
 app.listen(3004);

@@ -43,24 +43,20 @@
     </div>
     <div class="container-fluid" id="sighting-content">
 
-      <h4>Sightings Seen</h4>
-
       <div class="table-responsive">
-        <table class="table">
+        <table class="table table-hover">
 
-          <tr>
+          <tr class="bg-success">
             <th>Date/ Time</th>
             <th class="d-none d-sm-table-cell">Shape</th>
             <th class="d-none d-sm-table-cell">City</th>
             <th>State</th>
-            <th id="delete-heading">Delete/ Edit</th>
+            <th id="delete-heading">Delete</th>
           </tr>
           <% sightingsArr.forEach((el, index)=> { %>
-            <tr>
+            <tr class="clickable" onclick="window.location='/sighting/<%= index %>'">
               <td>
-                <a href="/sighting/<%= index %>">
-                  <%= el.date_time %>
-                </a>
+                <%= el.date_time %>
               </td>
               <td>
                 <%= el.shape %>
@@ -73,10 +69,7 @@
               </td>
               <td>
                 <form action="/sighting/delete/<%= index %>?_method=DELETE" method="POST">
-                  <input type="submit" value="Delete" />
-                </form>
-                <form action="/sighting/edit/<%= index %>" method="GET">
-                  <input type="submit" value="Edit" />
+                  <input class="btn btn-danger btn-sm" type="submit" value="Delete" />
                 </form>
               </td>
             </tr>
