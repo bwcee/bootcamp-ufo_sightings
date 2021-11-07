@@ -16,6 +16,70 @@ app.use(methodOverride("_method"));
 const goHome = (request, response) => {
   read("data.json", (err, data) => {
     const sightingsArr = data.sightings;
+    sightingsArr.forEach((el, index) => {
+      el.index = index;
+    });
+    if (err) {
+      response.status(404).send("Git outta here, there's no such page!");
+    }
+    response.render("pages/home", { sightingsArr });
+  });
+};
+
+// Sort function to sort list in Home page
+const callSort = (arr, sortBy) => {
+  arr.sort((a, b) => {
+    let toSortA;
+    let toSortB;
+    a[sortBy] === null
+      ? (toSortA = "zzzz")
+      : (toSortA = a[sortBy].toLowerCase());
+    b[sortBy] === null
+      ? (toSortB = "zzzz")
+      : (toSortB = b[sortBy].toLowerCase());
+    return toSortA > toSortB ? 1 : toSortA < toSortB ? -1 : 0;
+  });
+  return arr;
+};
+
+// Render Home page sorted by Shape
+const sortShape = (request, response) => {
+  read("data.json", (err, data) => {
+    const sightingsArr = data.sightings;
+    sightingsArr.forEach((el, index) => {
+      el.index = index;
+    });
+    callSort(sightingsArr, "shape");
+    if (err) {
+      response.status(404).send("Git outta here, there's no such page!");
+    }
+    response.render("pages/home", { sightingsArr });
+  });
+};
+
+// Render Home page sorted by City
+const sortCity = (request, response) => {
+  read("data.json", (err, data) => {
+    const sightingsArr = data.sightings;
+    sightingsArr.forEach((el, index) => {
+      el.index = index;
+    });
+    callSort(sightingsArr, "city");
+    if (err) {
+      response.status(404).send("Git outta here, there's no such page!");
+    }
+    response.render("pages/home", { sightingsArr });
+  });
+};
+
+// Render Home page sorted by State
+const sortState = (request, response) => {
+  read("data.json", (err, data) => {
+    const sightingsArr = data.sightings;
+    sightingsArr.forEach((el, index) => {
+      el.index = index;
+    });
+    callSort(sightingsArr, "state");
     if (err) {
       response.status(404).send("Git outta here, there's no such page!");
     }
@@ -94,6 +158,9 @@ const deleteSighting = (request, response) => {
 };
 
 app.get("/", goHome);
+app.get("/sort/shape", sortShape);
+app.get("/sort/city", sortCity);
+app.get("/sort/state", sortState);
 app.get("/sighting/:indexToShow", showFullSighting);
 app.get("/sighting", submitSighting);
 app.post("/sighting", doSubmitSighting);
